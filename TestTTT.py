@@ -106,8 +106,12 @@ def test_str():
     #print(str(newboard))
 
 def test_negamax():
-    newboard = build (['0', 4, '8'], 'O')
+    #newboard = build (['0', 4, '8'], 'O')
+    for i in range(9):
+       negamax_after_first_move(i)
+
+def negamax_after_first_move(first_move):
+    newboard = build([first_move], 'O')
     driver = Negamax(newboard)
-    driver.make_move()
-    driver.make_move()
-    driver.make_move()
+    for i in range(8):
+        driver.make_move()
