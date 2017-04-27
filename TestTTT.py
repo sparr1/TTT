@@ -11,10 +11,10 @@ def build(list =[], player = 'X'):
 
 def test_state_dump():
     newboard = build()
-    assert len(newboard._dump()) == 0
+    assert len(newboard.get_move_list()) == 0
 
 def test_x_in_position():
-    newboard = build([0])
+    newboard = build([0], 'O')
     assert newboard[0] == 'X'
 
 def test_o_in_position():
@@ -31,4 +31,9 @@ def test_out_of_bounds():
         newboard[9]
     except Exception as e:
         assert str(e) == 'index out of bounds'
+
+def test_successors_simple():
+    newboard = build([0,2,6,8,'1','3','5','7'])
+    next_states = bf.successors(newboard)
+    assert next_states[0].get_move_list() == [0,2,6,8,'1','3','5','7',4]
 
