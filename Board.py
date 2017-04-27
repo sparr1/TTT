@@ -13,16 +13,46 @@ class BoardFactory:
                 return 'O'
             return ' '
 
-        def win_for(self, player='X'):
-            # TODO check for win for player
+        #check one type of win
+        def _check_rows(self, vec, pt_range, player):
+            #translate between grid vectors and movement through list
+            def _vec_transform(point, vector, scalar):
+                return (point[0] + vector[0] * scalar) + 3 * (point[1] + vector[1] * scalar)
+            #start from every point in pt range
+            for pt in pt_range:
+                # prove rows by contradiction
+                win = True
+                #travel down the row
+                for d in range(3):
+                    #travel by vector, check if each point is not what is expected
+                    if self[_vec_transform(pt, vec, d)] != player:
+                        #proof by contradiction, row is not a win
+                        win = False
+                #if win hasn't toggled, you won in that row
+                if win:
+                    return True
+            #if you haven't won in any of the rows checked so far, you didn't win in this batch of rows
             return False
 
+        #check some different types of wins for the player
+        def win_for(self, player='X'):
+            # check the horizontals
+            # check the verticals
+            # check diagonal from top left
+            # check diagonal from top right
+            # if any true you have a three in a row
+            return self._check_rows( (0, 1), [(x, 0) for x in range(3)], player)\
+                or self._check_rows( (1, 0), [(0, x) for x in range(3)], player)\
+                or self._check_rows( (1, 1), [(0, 0)], player)\
+                or self._check_rows((1,-1), [(0, 2)], player)
+
+        #what a beautiful win method
         def win(self):
             if self.win_for():
                 return 'X'
             if self.win_for('O'):
                 return 'O'
-            if self.win_for('D'):
+            if len(self._move_list)==9:
                 return 'D'
             return ' '
 
@@ -38,7 +68,7 @@ class BoardFactory:
         if player is not None:
             pl = str(player)
         if board is not None and move is not None:
-            ml = board.get_move_list()
+            ml = list(board.get_move_list())
             ml.append(move)
             pl = 'X' if type(move) == 'str' else 'O'
         return BoardFactory.State(ml,pl)
