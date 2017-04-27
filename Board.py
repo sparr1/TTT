@@ -1,8 +1,8 @@
 class BoardFactory:
     class State:
         def __init__(self, move_list, turn):
-            self._move_list = move_list
-            self._turn = turn
+            self._move_list = list(move_list)
+            self._turn = str(turn)
 
         def __getitem__(self, item):
             if item < 0 or item > 8:
@@ -50,7 +50,7 @@ class BoardFactory:
             return self._check_rows( (1, 0), [(0, x) for x in range(3)], player)\
                 or self._check_rows( (0, 1), [(x, 0) for x in range(3)], player)\
                 or self._check_rows( (1, 1), [(0, 0)], player)\
-                or self._check_rows((1,-1), [(0, 2)], player)
+                or self._check_rows( (1,-1), [(0, 2)], player)
 
         #what a beautiful win method
         def win(self):
@@ -67,17 +67,21 @@ class BoardFactory:
 
         def get_turn(self):
             return self._turn
+        def toggle_turn(self):
+            self._turn = 'X' if self._turn == 'O' else 'O'
 
     def new_board(self,move_list=None, board=None, move=None, player=None):
         if move_list is not None:
             ml = list(move_list)
         if player is not None:
             pl = str(player)
+            return BoardFactory.State(ml, pl)
         if board is not None and move is not None:
             ml = list(board.get_move_list())
             ml.append(move)
-            pl = 'X' if type(move) == 'str' else 'O'
-        return BoardFactory.State(ml,pl)
+        new_state = BoardFactory.State(ml,board.get_turn())
+        new_state.toggle_turn()
+        return new_state
 
     def successors(self, board_state):
         suc = []
@@ -86,8 +90,9 @@ class BoardFactory:
         move_token = board_state.get_turn()
         for n in range(9):
             if board_state[n] == ' ':
+                move = n if move_token=='X' else str(n)
                 suc.append(
                 self.new_board(board=board_state,
-                               move= n if move_token=='X' else str(n) ))
+                               move=move))
         return suc
 

@@ -7,7 +7,6 @@ def init():
     bf = BoardFactory()
 
 def build(list =[], player = 'X'):
-    global bf
     return bf.new_board(move_list=list, player=player)
 
 def test_state_dump():
@@ -44,8 +43,15 @@ def test_successors_simple():
 def test_successors_from_start():
     newboard = build([])
     next_states = bf.successors(newboard)
-    print(next_states[0].get_move_list())
     assert [s.get_move_list() for s in next_states] == [[x] for x in range(9)]
+
+def test_successors_complex():
+    newboard = build (['0', 4, '8'], 'X')
+    next_states = bf.successors(newboard)
+    next_states = bf.successors(next_states[0])
+    # for n in range(len(next_states)):
+    #     print(str(next_states[n]))
+
 def test_simple_horizontal_win():
     # X X X
     #
