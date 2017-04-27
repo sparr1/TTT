@@ -8,7 +8,7 @@ class Negamax:
 
     def make_move(self):
         color = 1 if self._current_state.get_turn() == 'X' else -1
-        new_state = self.tree_search(self._current_state, 10, color)[1]
+        new_state = self.tree_search(self._current_state, 100, color)[1]
         print(str(new_state))
         self._current_state = new_state
 
@@ -18,7 +18,7 @@ class Negamax:
             return 0
         if pos == 'X':
             return (5/depth)
-        return -(5/depth)
+        return -5*depth
 
     def tree_search(self, node, depth, color):
         children = self._bf.successors(node)
