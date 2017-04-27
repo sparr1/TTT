@@ -12,7 +12,13 @@ class BoardFactory:
             if str(item) in self._move_list:
                 return 'O'
             return ' '
-
+        
+        def __str__(self):
+            return ('\n'+self[0]+'|'+self[1]+'|'+self[2]+'\n'+
+                        '-----'+'\n'+
+                        self[3]+'|'+self[4]+'|'+self[5]+'\n'+
+                        '-----'+'\n'+
+                        self[6]+'|'+self[7]+'|'+self[8])
         #check one type of win
         def _check_rows(self, vec, pt_range, player):
             #translate between grid vectors and movement through list
@@ -41,8 +47,8 @@ class BoardFactory:
             # check diagonal from top left
             # check diagonal from top right
             # if any true you have a three in a row
-            return self._check_rows( (0, 1), [(x, 0) for x in range(3)], player)\
-                or self._check_rows( (1, 0), [(0, x) for x in range(3)], player)\
+            return self._check_rows( (1, 0), [(0, x) for x in range(3)], player)\
+                or self._check_rows( (0, 1), [(x, 0) for x in range(3)], player)\
                 or self._check_rows( (1, 1), [(0, 0)], player)\
                 or self._check_rows((1,-1), [(0, 2)], player)
 

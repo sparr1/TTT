@@ -93,3 +93,7 @@ def test_midgame_win():
     # X   X
     newboard = build([4, '1', 8, '0', 2, '5,', 6])
     assert newboard.win() == 'X'
+
+def test_str():
+    newboard = build(['0',1, '2', 3, '4', 5, '6', 7, '8'])
+    print(str(newboard))
