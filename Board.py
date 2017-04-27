@@ -12,7 +12,7 @@ class BoardFactory:
             if str(item) in self._move_list:
                 return 'O'
             return ' '
-        
+
         def __str__(self):
             return ('\n'+self[0]+'|'+self[1]+'|'+self[2]+'\n'+
                         '-----'+'\n'+

@@ -1,5 +1,6 @@
 import pytest
 from Board import BoardFactory
+from Negamax import Negamax
 @pytest.fixture(scope="session", autouse=True)
 def init():
     global bf
@@ -96,4 +97,11 @@ def test_midgame_win():
 
 def test_str():
     newboard = build(['0',1, '2', 3, '4', 5, '6', 7, '8'])
-    print(str(newboard))
+    #print(str(newboard))
+
+def test_negamax():
+    newboard = build (['0', 4, '8'], 'O')
+    driver = Negamax(newboard)
+    driver.make_move()
+    driver.make_move()
+    driver.make_move()
