@@ -6,6 +6,7 @@ def init():
     global bf
     bf = BoardFactory()
 
+
 def build(list =[], player = 'X'):
     return bf.new_board(move_list=list, player=player)
 
@@ -28,9 +29,11 @@ def test_empty_position():
 def test_out_of_bounds():
     newboard = build()
     try:
-        newboard[9]
+        fail = newboard[9]
+        assert fail is False
     except Exception as e:
         assert str(e) == 'index out of bounds'
+
 
 def test_successors_simple():
     # X O X

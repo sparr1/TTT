@@ -15,9 +15,9 @@ class BoardFactory:
 
         def __str__(self):
             return ('\n'+self[0]+'|'+self[1]+'|'+self[2]+'\n'+
-                        '-----'+'\n'+
+                        '-+-+-'+'\n'+
                         self[3]+'|'+self[4]+'|'+self[5]+'\n'+
-                        '-----'+'\n'+
+                        '-+-+-'+'\n'+
                         self[6]+'|'+self[7]+'|'+self[8])
         #check one type of win
         def _check_rows(self, vec, pt_range, player):
