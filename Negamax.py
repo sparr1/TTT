@@ -17,12 +17,12 @@ class Negamax:
         if pos == ' ' or pos == 'D':
             return 0
         if pos == 'X':
-            return (5/depth)
+            return 5/depth
         return -5*depth
 
     def tree_search(self, node, depth, color):
         children = self._bf.successors(node)
-        if depth == 0 or len(children)==0:
+        if depth == 0 or len(children) == 0:
             return color*self.value_position(node, color, depth), node
         best_value = -sys.maxsize
         best_child = children[0]
